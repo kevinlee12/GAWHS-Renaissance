@@ -1,9 +1,7 @@
 #-------------------------------------------------------------------------------
 # Name:        RenCard
-# Purpose:
-#
-# Author:      leekevin
-#
+# Purpose:     Renaissance Card Sorter and Counter#
+# Author:      leekevin#
 # Created:     04/11/2013
 # Copyright:   (c) leekevin 2013
 # Licence:     Creative Commons: Attribution-NonCommercial-ShareAlike 3.0 Unported
@@ -13,7 +11,7 @@ import sys
 
 def gpa():
     home.destroy()
-    gpa_win = Frame(win)
+    gpa_win = Frame(win,bg='white')
     gpa_win.pack()
     welcome = Label(gpa_win, text ='GPA Mode',font = 'Arial 16')
     welcome.grid(row = 0, column =0)
@@ -25,7 +23,7 @@ def result():
     print('Result Mode')
 
 win= Tk()
-home= Frame(win)
+home= Frame(win,bg ='white')
 home.pack()
 win.wm_title('Renaissance Card Sorter')
 welcome = Label(home, text = 'Renaissance Card Sorter', foreground ='dark red', font = 'Arial 16')
