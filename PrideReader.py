@@ -1,23 +1,40 @@
 #-----------------------------------------------------
 #PRIDE Reader
 #-----------------------------------------------------
+def decider():
+    import re
+    teacher_pat = re.compile(r'(?P<pat>Teache)'r'(?P<teacher_last>[-a-zA-Z]+, [-a-zA-Z]+)')
+    student_pat = re.compile(r'(?P<gender>[FM] )'r'(?P<grade>\d\d  )'r'(?P<name>[-a-zA-Z ]+, [-a-zA-Z ]+)')
+    for line in file.readlines():
+
+
+
+
 def teacher():
     'Teacher extractor'
     import re
-    teacher_pat = re.compile(r'(?P<pat>Teache)'r'(?P<teacher_last>[-a-zA-Z]+, [-a-zA-Z]+)')
-    check = []
+    prev_teacher = []
+    #teacher_pat = re.compile(r'(?P<pat>Teache)'r'(?P<teacher_last>[-a-zA-Z]+, [-a-zA-Z]+)')
     for line in file.readlines():
         teacher = teacher_pat.findall(line)
         if teacher == []:
             pass
         else:
-            print(teacher[0][1])
+            #print(teacher[0][1])
+            if prev_teacher == teacher[0][1]:
+                pass
+            else:
+                print(teacher[0][1])
+                prev_teacher = teacher[0][1]
+
+
 #'r' (?P<middle_name>[-a-zA-Z]+)?'
 def student():
     'Student extractor'
     import re
+    record = open('Record.txt','w')
     count = 0
-    student_pat = re.compile(r'(?P<gender>[FM] )'r'(?P<grade>\d\d  )'r'(?P<name>[-a-zA-Z ]+, [-a-zA-Z ]+)')
+    #student_pat = re.compile(r'(?P<gender>[FM] )'r'(?P<grade>\d\d  )'r'(?P<name>[-a-zA-Z ]+, [-a-zA-Z ]+)')
     check_stu = []
     for line in file.readlines():
         student = student_pat.findall(line)
@@ -25,7 +42,9 @@ def student():
         if student == []:
             pass
         else:
-            print(student[0])
+            print(list(student[0][0:3]))
+            student = str(student[0][0:2])
+            record.write(student + '\n')
             count = count + 1
     print(count)
     print('1616 students')
