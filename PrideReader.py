@@ -5,7 +5,7 @@ def decider():
     import re
     prev_teacher = []
     teacher_pat = re.compile(r'(?P<pat>Teache)'r'(?P<teacher_last>[-a-zA-Z]+, [-a-zA-Z]+)')
-    student_pat = re.compile(r'(?P<gender>[FM] )'r'(?P<grade>\d\d  )'r'(?P<name>[-a-zA-Z ]+, [-a-zA-Z ]+)')
+    student_pat = re.compile(r'(?P<gender>[FM] )'r'(?P<grade>\d\d)'r'(?P<name>[-a-zA-Z ]+, [-a-zA-Z ]+)')
     for line in file.readlines():
         teacher = teacher_pat.findall(line)
         student = student_pat.findall(line)
@@ -18,11 +18,10 @@ def decider():
                 prev_teacher = teacher[0][1]
         elif student != []:
             #print(student[0][0:3])
-            student = list(student[0][0:])
-            #reg expression for substitution here
-            student[0][1]= float(student[0][1]) #Needs fixing, cannot convert string to float
+            student = list(student[0][0:])\
+            #student[0][1]= float(student[0][1]) #Needs fixing, cannot convert string to float
             student.append(prev_teacher)
-            print(student)
+            print(student[0][1])
 
 
 
