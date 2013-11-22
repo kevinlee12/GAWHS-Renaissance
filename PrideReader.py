@@ -1,10 +1,13 @@
 #-----------------------------------------------------
 #PRIDE Reader
 #-----------------------------------------------------
+import re
+import csv
+
 def decider():
-    import re
     prev_teacher = []
-    teacher_pat = re.compile(r'(?P<pat>Teache)'r'(?P<teacher_last>[-a-zA-Z]+, [-a-zA-Z]+)')
+    count = 1
+    teacher_pat = re.compile(r'(?P<pat>Teache)'r'(?P<teacher_last>[-a-zA-Z\' ]+, [-a-zA-Z\']+)')
     student_pat = re.compile(r'(?P<gender>[FM] )'r'(?P<grade>\d\d)'r'(?P<name>[-a-zA-Z ]+, [-a-zA-Z ]+)')
     for line in file.readlines():
         teacher = teacher_pat.findall(line)
@@ -14,20 +17,22 @@ def decider():
             if prev_teacher == teacher[0][1]:
                 pass
             else:
-                print(teacher[0][1])
+                #print(teacher[0][1])
+                count = 1
                 prev_teacher = teacher[0][1]
         elif student != []:
-            #print(student[0][0:3])
-            student = list(student[0][0:])\
-            #student[0][1]= float(student[0][1]) #Needs fixing, cannot convert string to float
+            #print(count)
+            count = count + 1
+            student = list(student[0][0:])
+            student[1]= int(student[1])
             student.append(prev_teacher)
-            print(student[0][1])
-
-
+            print(student)
+            writer.writerows(student)
+    file.close()
+    out_file.close()
 
 def teacher_find():
     'Teacher extractor'
-    import re
     prev_teacher = []
     #teacher_pat = re.compile(r'(?P<pat>Teache)'r'(?P<teacher_last>[-a-zA-Z]+, [-a-zA-Z]+)')
     for line in file.readlines():
@@ -46,7 +51,6 @@ def teacher_find():
 #'r' (?P<middle_name>[-a-zA-Z]+)?'
 def student_find():
     'Student extractor'
-    import re
     record = open('Record.txt','w')
     count = 0
     #student_pat = re.compile(r'(?P<gender>[FM] )'r'(?P<grade>\d\d  )'r'(?P<name>[-a-zA-Z ]+, [-a-zA-Z ]+)')
@@ -70,5 +74,9 @@ try:
     file = open(file_name + '.txt', 'r')
 except IOError:
     print('File not found')
+
+output_name = 'Output'
+out_file = open(output_name+'.csv','wb')
+writer =csv.writer(out_file)
 
 decider()
