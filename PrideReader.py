@@ -27,7 +27,7 @@ def decider():
             student[1]= int(student[1])
             student.append(prev_teacher)
             print(student)
-            writer.writerows(student)
+            writer.writerow(student)
     file.close()
     out_file.close()
 
@@ -76,7 +76,7 @@ except IOError:
     print('File not found')
 
 output_name = 'Output'
-out_file = open(output_name+'.csv','wb')
+out_file = open(output_name+'.csv','w')
 writer =csv.writer(out_file)
 
 decider()
