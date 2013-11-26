@@ -4,7 +4,19 @@
 import re
 import csv
 
+
+def csv_sorter():
+    'CSV File Sorter, Prep for GPA entering'
+    output = csv.reader(out_file)
+    import operator
+    for row in output:
+        print(row)
+    sortedlist = sorted(output, key=operator.itemgetter(1), reverse=True)
+    print(sortedlist)
+    out_file.close()
+
 def decider():
+    'Pride document reader'
     prev_teacher = []
     count = 1
     teacher_pat = re.compile(r'(?P<pat>Teache)'r'(?P<teacher_last>[-a-zA-Z\' ]+, [-a-zA-Z\']+)')
@@ -79,4 +91,4 @@ output_name = 'Output'
 out_file = open(output_name+'.csv','w')
 writer =csv.writer(out_file)
 
-decider()
+csv_sorter()
