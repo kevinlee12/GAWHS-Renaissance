@@ -8,20 +8,24 @@
 # Copyright:   (c) leekevin 2013
 # Licence:     Creative Commons: Attribution-NonCommercial-ShareAlike 3.0 Unported
 #-------------------------------------------------------------------------------
+#Import for all functions needed
 from tkinter import *
 from tkinter import filedialog
 import sys
 import re
 import csv
+import os
 
 def decider():
-    'Pride document reader'
+    'Pride document reader. Reads PRIDE file and outputs CSV File'
     prev_teacher = []
     file = open(file_n,'r')
-    output_name = 'Output'
-    out_file = open(output_name+'.csv','w')
+    #output_name = 'Output'
+    output = filedialog.asksaveasfilename(filetypes = (("CSV Files", ".csv"),("All files", "*.*")), initialfile = 'PRIDE Output.csv')
+    out_file = open(output,'w')
     writer =csv.writer(out_file)
     count = 1
+    writer.writerow(['Gender','Grade','Name','Teacher','GPA','Rank'])
     teacher_pat = re.compile(r'(?P<pat>Teache)'r'(?P<teacher_last>[-a-zA-Z\' ]+, [-a-zA-Z\']+)')
     student_pat = re.compile(r'(?P<gender>[FM] )'r'(?P<grade>\d\d)'r'(?P<name>[-a-zA-Z ]+, [-a-zA-Z ]+)')
     for line in file.readlines():
@@ -45,7 +49,7 @@ def decider():
             writer.writerow(student)
     file.close()
     out_file.close()
-
+    os.system(str("start excel.exe " + output))
 
 def pride_extractor():
     file_n = filedialog.askopenfilename(filetypes = (("Text Files", ".txt"),("All files", "*.*")))
