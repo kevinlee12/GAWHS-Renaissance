@@ -21,7 +21,7 @@ def decider():
     prev_teacher = []
     file = open(file_n,'r')
     #output_name = 'Output'
-    output = filedialog.asksaveasfilename(filetypes = (("CSV Files", ".csv"),("All files", "*.*")), initialfile = 'PRIDE Output.csv')
+    output = filedialog.asksaveasfilename(filetypes = (("CSV Files", ".csv"),("All files", "*.*")), initialfile = 'PRIDEOutput.csv')
     out_file = open(output,'w')
     writer =csv.writer(out_file)
     count = 1
