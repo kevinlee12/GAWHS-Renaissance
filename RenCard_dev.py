@@ -49,7 +49,7 @@ def gpa():
             elif 3.5<=row[4] and row[4]<6:
                 row[5] = 'platinum'
             print(row)
-            writer.writerow(row) #needs fixing
+            writer.writerow(row)
         except ValueError:
             pass
         except:
