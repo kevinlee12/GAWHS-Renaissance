@@ -27,16 +27,15 @@ def gpa():
     new_sheet = open('GPAOutput.csv','w')
     writer =csv.writer(new_sheet, dialect='excel')
     sheet_reader = csv.reader(sheet, dialect="excel")
-    sheet.seek(1)
+    writer.writerow(['Gender','Grade','Name','Teacher','GPA','Rank'])
     for row in sheet_reader:
-        print(row)
-        print(type(row[4]))
-        something = input(':')
         if row[4] == 'GPA':
-
+            continue
+        elif row[4] == '':
+            row[5] = 'wildcat'
+            writer.writerow(row)
         try:
             row[4] = float(row[4])
-            print(type(row[4]))
             if row[4] == 0:
                 row[5] = 'wildcat'
             elif 0<= row[4] and row[4]<2:
@@ -56,6 +55,7 @@ def gpa():
         except:
             sheet.close()
             quit
+        print(row)
     try:
         sheet.close()
         print('done')
@@ -101,6 +101,7 @@ def decider():
     os.system(str("start excel.exe " + output))
     home.destroy()
     step1 = ttk.Frame(win)
+    global step1
     step1.pack()
     done_step1 = ttk.Button(step1, text = 'Done', command = gpa)
     done_step1.grid(row = 0, column = 0)
@@ -124,9 +125,9 @@ style = ttk.Style()
 style.configure("BW.TLabel" ) #Change font size
 welcome = ttk.Label(top,text = 'Renaissance Card Sorter', style = "BW.TLabel")
 welcome.grid(row = 0 , column = 0)
-logo_image = PhotoImage(file = 'logowhite.gif')
-logo = ttk.Label(top ,image = logo_image)
-logo.grid(row=0, column =2)
+#logo_image = PhotoImage(file = 'logowhite.gif')
+#logo = ttk.Label(top ,image = logo_image)
+#logo.grid(row=0, column =2)
 prideButton = ttk.Button(home, text = 'Pride File', command = pride_extractor)
 prideButton.grid(row = 1, column = 0)
 gpaButton = ttk.Button(home, text = 'GPA Ranker & Counter', command = gpa)
