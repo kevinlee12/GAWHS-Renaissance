@@ -1,6 +1,7 @@
 #-------------------------------------------------------------------------------
 # Name:        RenCard
-# Purpose:
+# Purpose:     Do all things RenCard related, mainly: sorting and counting and
+#              cateogorzing. 
 #
 # Author:      leekevin
 #
