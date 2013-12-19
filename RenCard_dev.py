@@ -2,9 +2,7 @@
 # Name:        RenCard
 # Purpose:     Do all things RenCard related, mainly: sorting and counting and
 #              cateogorzing. 
-#
 # Author:      leekevin
-#
 # Created:     04/11/2013
 # Copyright:   (c) leekevin 2013
 # Licence:     Creative Commons: Attribution-NonCommercial-ShareAlike 3.0 Unported
