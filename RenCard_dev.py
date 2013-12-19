@@ -19,9 +19,21 @@ import csv
 import os
 #---------End Import------
 
+def splitter():
+    'Arrange Students by Pride Class, requires partial manual intervention'
+
+
+
 def gpa():
     'GPA Ranker and Counter'
     #CSV File (out_file in Decider) will now be sheet
+    home.destroy()
+    none = 0
+    wildcat = 0
+    bronze = 0
+    silver = 0
+    gold = 0
+    platinum = 0
     sheet_filename = filedialog.askopenfilename(filetypes = (("CSV Files", ".csv"),("All files", "*.*")))
     sheet = open(sheet_filename, 'r')
     new_sheet = open('GPAOutput.csv','w')
@@ -33,21 +45,27 @@ def gpa():
             continue
         elif row[4] == '':
             row[5] = 'wildcat'
+            wildcat = wildcat + 1
             writer.writerow(row)
         try:
             row[4] = float(row[4])
-            if row[4] == 0:
-                row[5] = 'wildcat'
-            elif 0<= row[4] and row[4]<2:
+            #if row[4] == 0:
+                #row[5] = 'wildcat'
+            if 0<= row[4] and row[4]<2:
                 row[5] = 'none'
+                none = none + 1
             elif 2<= row[4] and row[4]<2.5:
                 row[5] = 'bronze'
+                bronze = bronze + 1
             elif 2.5<=row[4] and row[4]<3:
                 row[5] = 'silver'
+                silver = silver + 1
             elif 3<=row[4] and row[4]<3.5:
                 row[5] = 'gold'
+                gold = gold + 1
             elif 3.5<=row[4] and row[4]<6:
                 row[5] = 'platinum'
+                platinum = platinum + 1
             print(row)
             writer.writerow(row)
         except ValueError:
@@ -63,7 +81,11 @@ def gpa():
     except ValueError:
         pass
         quit
-    #step1.destroy()
+    try:
+        home.destroy()
+    except:
+        pass
+    #OS file joiner and splitter
 
 def decider():
     '''Pride document reader. Reads PRIDE file and outputs CSV File'''
@@ -101,10 +123,13 @@ def decider():
     os.system(str("start excel.exe " + output))
     home.destroy()
     step1 = ttk.Frame(win)
-    global step1
     step1.pack()
+    done1_prompt = ttk.Label(step1, text= 'Input GPA')
+    done1_prompt.grid(row = 0, column = 0)
     done_step1 = ttk.Button(step1, text = 'Done', command = gpa)
-    done_step1.grid(row = 0, column = 0)
+    done_step1.grid(row = 1, column = 0)
+    step1_quit = ttk.Button(step1, text = 'Quit', command = sys.exit) #cannot exit
+    step1_quit.grid(row = 1, column = 1)
 
 def pride_extractor():
     file_n = filedialog.askopenfilename(filetypes = (("Text Files", ".txt"),("All files", "*.*")))
@@ -125,9 +150,9 @@ style = ttk.Style()
 style.configure("BW.TLabel" ) #Change font size
 welcome = ttk.Label(top,text = 'Renaissance Card Sorter', style = "BW.TLabel")
 welcome.grid(row = 0 , column = 0)
-#logo_image = PhotoImage(file = 'logowhite.gif')
-#logo = ttk.Label(top ,image = logo_image)
-#logo.grid(row=0, column =2)
+logo_image = PhotoImage(file = 'logowhite.gif')
+logo = ttk.Label(top ,image = logo_image)
+logo.grid(row=0, column =2)
 prideButton = ttk.Button(home, text = 'Pride File', command = pride_extractor)
 prideButton.grid(row = 1, column = 0)
 gpaButton = ttk.Button(home, text = 'GPA Ranker & Counter', command = gpa)
