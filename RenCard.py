@@ -140,12 +140,16 @@ def gpa():
     step1 = ttk.Frame(win)
     global step1
     step1.pack()
-    done1_prompt = ttk.Label(step1, text= 'Sort Pride Classes', font = 'SegoeUI 13')
+    done1_prompt = ttk.Label(step1, text= 'Sort the spreadsheet according to the following order:', font = 'SegoeUI 13')
     done1_prompt.grid(row = 0, column = 0)
+    done1_prompt2 = ttk.Label(step1, text= '1. Teacher', font = 'SegoeUI 13')
+    done1_prompt2.grid(row = 1, column = 0)
+    done1_prompt3 = ttk.Label(step1, text= '2. Name', font = 'SegoeUI 13')
+    done1_prompt3.grid(row = 2, column = 0)
     done_step1 = ttk.Button(step1, text = 'Done', command = splitter)
-    done_step1.grid(row = 1, column = 0)
+    done_step1.grid(row = 3, column = 0)
     step1_quit = ttk.Button(step1, text = 'Quit', command = sys.exit)
-    step1_quit.grid(row = 1, column = 1)
+    step1_quit.grid(row = 3, column = 1)
     #OS file joiner and splitter
 
 def decider():
@@ -187,12 +191,16 @@ def decider():
     step1 = ttk.Frame(win)
     global step1
     step1.pack()
-    done1_prompt = ttk.Label(step1, text= 'Input GPA',font = 'SegoeUI 13')
+    done1_prompt = ttk.Label(step1, text= 'Sort spreadsheet according to the following order:',font = 'SegoeUI 13')
     done1_prompt.grid(row = 0, column = 0)
+    done1_prompt = ttk.Label(step1, text= '1. Grade',font = 'SegoeUI 13')
+    done1_prompt.grid(row = 1, column = 0)
+    done1_prompt = ttk.Label(step1, text= '2. Name',font = 'SegoeUI 13')
+    done1_prompt.grid(row = 2, column = 0)
     done_step1 = ttk.Button(step1, text = 'Done', command = gpa)
-    done_step1.grid(row = 1, column = 0)
+    done_step1.grid(row = 3, column = 0)
     step1_quit = ttk.Button(step1, text = 'Quit', command = sys.exit)
-    step1_quit.grid(row = 1, column = 1)
+    step1_quit.grid(row = 3, column = 1)
 
 def pride_extractor():
     file_n = filedialog.askopenfilename(filetypes = (("Text Files", ".txt"),("All files", "*.*")))
