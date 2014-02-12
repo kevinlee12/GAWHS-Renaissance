@@ -163,10 +163,13 @@ def decider():
     count = 1
     writer.writerow(['Gender','Grade','Name','Teacher','GPA','Rank'])
     teacher_pat = re.compile(r'(?P<pat>Teache)'r'(?P<teacher_last>[-a-zA-Z\' ]+, [-a-zA-Z\']+)')
+    #Add Room Number
     student_pat = re.compile(r'(?P<gender>[FM] )'r'(?P<grade>\d\d)'r'(?P<name>[-a-zA-Z ]+, [-a-zA-Z ]+)')
+    #Add bDays
     for line in file.readlines():
         teacher = teacher_pat.findall(line)
         student = student_pat.findall(line)
+        #Add Room Number
         if teacher != []:
             #print(teacher[0][1])
             if prev_teacher == teacher[0][1]:
