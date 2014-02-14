@@ -154,6 +154,7 @@ def gpa():
     step1_quit.grid(row = 3, column = 1)
     #OS file joiner and splitter
 
+
 def decider():
     '''Pride document reader. Reads PRIDE file and outputs CSV File'''
     prev_teacher = []
@@ -163,15 +164,16 @@ def decider():
     out_file = open(output,'w')
     writer =csv.writer(out_file)
     count = 1
-    writer.writerow(['Gender','Grade','Name','Teacher','GPA','Rank'])
+    writer.writerow(['Gender','Grade','Name','Birthday','Teacher','GPA','Rank'])
     teacher_pat = re.compile(r'(?P<pat>Teache)'r'(?P<teacher_last>[-a-zA-Z\' ]+, [-a-zA-Z\']+)')
-    #Add Room Number
-    student_pat = re.compile(r'(?P<gender>[FM] )'r'(?P<grade>\d\d)'r'(?P<name>[-a-zA-Z ]+, [-a-zA-Z ]+)')
-    #Add bDays
+    room_pat1 = re.compile(r'[A-Z]-[a-zA-Z0-9]+')
+    room_pat2 = re.compile(r'[A-Z][a-zA-Z0-0]+') #Thompson Bugged
+    student_pat = re.compile(r'(?P<gender>[FM] )'r'(?P<grade>\d\d)'r'(?P<name>[-a-zA-Z ]+, [-a-zA-Z ]+)'r'(?P<bday>\d\d/\d\d/\d\d)')
     for line in file.readlines():
         teacher = teacher_pat.findall(line)
         student = student_pat.findall(line)
-        #Add Room Number
+        room1 = room_pat1.findall(line)
+        room2 = room_pat2.findall(line)
         if teacher != []:
             #print(teacher[0][1])
             if prev_teacher == teacher[0][1]:
@@ -179,7 +181,10 @@ def decider():
             else:
                 #print(teacher[0][1])
                 count = 1
-                prev_teacher = teacher[0][1]
+                if room1 != []:
+                    prev_teacher = teacher[0][1] + ' :: ' + str(room1[0])
+                else:
+                    prev_teacher = teacher[0][1] + ' :: ' + str(room2[0])
         elif student != []:
             #print(count)
             count = count + 1
@@ -206,7 +211,6 @@ def decider():
     done_step1.grid(row = 3, column = 0)
     step1_quit = ttk.Button(step1, text = 'Quit', command = sys.exit)
     step1_quit.grid(row = 3, column = 1)
-
 def pride_extractor():
     file_n = filedialog.askopenfilename(filetypes = (("Text Files", ".txt"),("All files", "*.*")))
     global file_n
