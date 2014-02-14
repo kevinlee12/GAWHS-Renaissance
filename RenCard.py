@@ -6,6 +6,8 @@
 # Created:     04/11/2013
 # Copyright:   (c) leekevin 2013
 # Licence:     Creative Commons: Attribution-NonCommercial-ShareAlike 3.0 Unported
+# Notes:       Program is written backward, please start from the bottom to begin reading.
+#
 #-------------------------------------------------------------------------------
 #Import for all functions needed
 from tkinter import *
