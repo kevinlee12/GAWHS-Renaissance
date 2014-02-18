@@ -166,14 +166,12 @@ def decider():
     count = 1
     writer.writerow(['Gender','Grade','Name','Birthday','Teacher','GPA','Rank'])
     teacher_pat = re.compile(r'(?P<pat>Teache)'r'(?P<teacher_last>[-a-zA-Z\' ]+, [-a-zA-Z\']+)')
-    room_pat1 = re.compile(r'[A-Z]-[a-zA-Z0-9]+')
-    room_pat2 = re.compile(r'[A-Z][a-zA-Z0-0]+') #Thompson Bugged
+    room_pat = re.compile(r'(?P<pat>Room )'r'(?P<room>[A-Z][-a-zA-Z0-9]+)')
     student_pat = re.compile(r'(?P<gender>[FM] )'r'(?P<grade>\d\d)'r'(?P<name>[-a-zA-Z ]+, [-a-zA-Z ]+)'r'(?P<bday>\d\d/\d\d/\d\d)')
     for line in file.readlines():
         teacher = teacher_pat.findall(line)
         student = student_pat.findall(line)
-        room1 = room_pat1.findall(line)
-        room2 = room_pat2.findall(line)
+        room = room_pat1.findall(line)
         if teacher != []:
             #print(teacher[0][1])
             if prev_teacher == teacher[0][1]:
@@ -182,9 +180,7 @@ def decider():
                 #print(teacher[0][1])
                 count = 1
                 if room1 != []:
-                    prev_teacher = teacher[0][1] + ' :: ' + str(room1[0])
-                else:
-                    prev_teacher = teacher[0][1] + ' :: ' + str(room2[0])
+                    prev_teacher = teacher[0][1] + ' :: ' + str(room[0][1])
         elif student != []:
             #print(count)
             count = count + 1
