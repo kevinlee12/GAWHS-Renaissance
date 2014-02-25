@@ -1,7 +1,7 @@
 #-------------------------------------------------------------------------------
 # Name:        RenCard
 # Purpose:     Do all things RenCard related, mainly: sorting and counting and
-#              cateogorzing.
+#              categorzing.
 # Author:      leekevin
 # Created:     04/11/2013
 # Copyright:   (c) leekevin 2013
@@ -22,7 +22,7 @@ import datetime
 #---------End Import------
 
 def splitter():
-    'Arrange Students by Pride Class'
+    '''Arrange Students by Pride Class and outputs text files.'''
     step1.destroy()
     try:
         new_sheet = open(outsheet_directory[0]+'/GPAOutput.csv','r')
@@ -54,7 +54,7 @@ def splitter():
     step1_quit.grid(row = 1, column = 0)
 
 def gpa():
-    'GPA Ranker and Counter'
+    '''GPA Ranker and Counter, reads and outputs a new CSV File.'''
     #CSV File (out_file in Decider) will now be sheet
     try:
         step1.destroy()
@@ -82,32 +82,34 @@ def gpa():
     writer.writerow(['Gender','Grade','Name','Teacher','GPA','Rank'])
     for row in sheet_reader:
         total = total + 1
-        if row[4] == 'GPA':
+        if row[5] == 'GPA':
             continue
-        elif row[4] == '':
-            row[5] = 'wildcat'
-            row[4] = 'N/A'
+        elif row[5] == '':
+            row[6] = 'wildcat'
+            row[5] = 'N/A'
             wildcat = wildcat + 1
             writer.writerow(row)
         try:
-            row[4] = float(row[4])
-            #if row[4] == 0:
-                #row[5] = 'wildcat'
-            if 0<= row[4] and row[4]<2:
-                row[5] = 'none'
+            row[5] = float(row[5])
+            #if row[5] == 0:
+                #row[6] = 'wildcat'
+            if 0<= row[5] and row[5]<2:
+                row[6] = 'encouragement'
                 none = none + 1
-            elif 2<= row[4] and row[4]<2.5:
-                row[5] = 'bronze'
+            elif 2<= row[5] and row[5]<2.5:
+                row[6] = 'bronze'
                 bronze = bronze + 1
-            elif 2.5<=row[4] and row[4]<3:
-                row[5] = 'silver'
+            elif 2.5<=row[5] and row[5]<3:
+                row[6] = 'silver'
                 silver = silver + 1
-            elif 3<=row[4] and row[4]<3.5:
-                row[5] = 'gold'
+            elif 3<=row[5] and row[5]<3.5:
+                row[6] = 'gold'
                 gold = gold + 1
-            elif 3.5<=row[4] and row[4]<6:
-                row[5] = 'platinum'
+            elif 3.5<=row[5] and row[5]<=6:
+                row[6] = 'platinum'
                 platinum = platinum + 1
+            elif row[5]>6:
+                row[6] = 'INVALID GPA'
             print(row)
             writer.writerow(row)
         except ValueError:
@@ -135,7 +137,7 @@ def gpa():
     gold = str(gold)
     platinum = str(platinum)
     numbers_results = open(outsheet_directory[0]+'/Numbers.txt','w')
-    numbers_results.write('Summary of the Total Counts generated:'+ date_time +'\n' + 'Totals:'+ total + '\nNo Card:'+ none +'\nWildcat:'+ wildcat + '\nBronze:'+ bronze + '\nSilver:'+ silver + '\nGold:'+ gold + '\nPlatinum:' + platinum)
+    numbers_results.write('Summary of the Total Counts generated:'+ date_time +'\n' + 'Totals:'+ total + '\nEncouragement:'+ none +'\nWildcat:'+ wildcat + '\nBronze:'+ bronze + '\nSilver:'+ silver + '\nGold:'+ gold + '\nPlatinum:' + platinum)
     numbers_results.close()
     new_sheet.close()
     os.system(str("start excel.exe " + outsheet_directory[0] + '/GPAOutput.csv'))
@@ -156,7 +158,7 @@ def gpa():
 
 
 def decider():
-    '''Pride document reader. Reads PRIDE file and outputs CSV File'''
+    '''Pride document reader. Reads PRIDE file and outputs CSV File WITHOUT GPA.'''
     prev_teacher = []
     file = open(file_n,'r')
     #output_name = 'Output'
@@ -171,7 +173,7 @@ def decider():
     for line in file.readlines():
         teacher = teacher_pat.findall(line)
         student = student_pat.findall(line)
-        room = room_pat1.findall(line)
+        room = room_pat.findall(line)
         if teacher != []:
             #print(teacher[0][1])
             if prev_teacher == teacher[0][1]:
@@ -179,7 +181,7 @@ def decider():
             else:
                 #print(teacher[0][1])
                 count = 1
-                if room1 != []:
+                if room != []:
                     prev_teacher = teacher[0][1] + ' :: ' + str(room[0][1])
         elif student != []:
             #print(count)
@@ -208,6 +210,7 @@ def decider():
     step1_quit = ttk.Button(step1, text = 'Quit', command = sys.exit)
     step1_quit.grid(row = 3, column = 1)
 def pride_extractor():
+    '''Asks user for file and sends user to decider function.'''
     file_n = filedialog.askopenfilename(filetypes = (("Text Files", ".txt"),("All files", "*.*")))
     global file_n
     file_name = ttk.Label(home,text = file_n)
@@ -216,6 +219,7 @@ def pride_extractor():
         process = ttk.Button(home, text = 'Extract!',command = decider)
         process.grid(row = 1, column = 2)
 
+#The following is for the main window, program begins here.
 win= Tk()
 win.title('Renaissance Card Sorter')
 global win
