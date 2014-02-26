@@ -5,7 +5,7 @@
 # Author:      leekevin
 # Created:     04/11/2013
 # Copyright:   (c) leekevin 2013
-# Licence:     Creative Commons: Attribution-NonCommercial-ShareAlike 3.0 Unported
+# Licence:     GPL v3
 # Notes:       Program is written backward, please start from the bottom to begin reading.
 # Planned Features: Error Log
 #-------------------------------------------------------------------------------
