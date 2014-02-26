@@ -138,6 +138,13 @@ def gpa():
     platinum = str(platinum)
     numbers_results = open(outsheet_directory[0]+'/Numbers.txt','w')
     numbers_results.write('Summary of the Total Counts generated:'+ date_time +'\n' + 'Totals:'+ total + '\nEncouragement:'+ none +'\nWildcat:'+ wildcat + '\nBronze:'+ bronze + '\nSilver:'+ silver + '\nGold:'+ gold + '\nPlatinum:' + platinum)
+    numbers_results.write('\nErrors:')
+    sheet = open(sheet_filename, 'r')
+    sheet_reader = csv.reader(sheet, dialect="excel")
+    for row in sheet_reader:
+        if row[6]=='INVALID GPA':
+            numbers_results.write('\nstr(row)')
+    sheet_reader.close()
     numbers_results.close()
     new_sheet.close()
     os.system(str("start excel.exe " + outsheet_directory[0] + '/GPAOutput.csv'))
