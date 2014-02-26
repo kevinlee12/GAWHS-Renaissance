@@ -79,7 +79,7 @@ def gpa():
     new_sheet = open(outsheet_directory[0]+'/GPAOutput.csv','w')
     writer =csv.writer(new_sheet, dialect='excel')
     sheet_reader = csv.reader(sheet, dialect="excel")
-    writer.writerow(['Gender','Grade','Name','Teacher','GPA','Rank'])
+    writer.writerow(['Gender','Grade','Name','Birthday','Teacher','GPA','Rank'])
     for row in sheet_reader:
         total = total + 1
         if row[5] == 'GPA':
@@ -119,7 +119,7 @@ def gpa():
             quit
         print(row)
     try:
-        sheet.close()
+        #sheet.close()
         print('done')
     except ValueError:
         pass
@@ -138,13 +138,12 @@ def gpa():
     platinum = str(platinum)
     numbers_results = open(outsheet_directory[0]+'/Numbers.txt','w')
     numbers_results.write('Summary of the Total Counts generated:'+ date_time +'\n' + 'Totals:'+ total + '\nEncouragement:'+ none +'\nWildcat:'+ wildcat + '\nBronze:'+ bronze + '\nSilver:'+ silver + '\nGold:'+ gold + '\nPlatinum:' + platinum)
-    numbers_results.write('\nErrors:')
-    sheet = open(sheet_filename, 'r')
-    sheet_reader = csv.reader(sheet, dialect="excel")
+    numbers_results.write('\n\nErrors:')
+    #USE OUTFILE CSV- NOT COMPLETED
     for row in sheet_reader:
-        if row[6]=='INVALID GPA':
-            numbers_results.write('\nstr(row)')
-    sheet_reader.close()
+        if row[6]==:
+            numbers_results.write('\n row[0:]')
+    sheet.close()
     numbers_results.close()
     new_sheet.close()
     os.system(str("start excel.exe " + outsheet_directory[0] + '/GPAOutput.csv'))
@@ -245,5 +244,3 @@ prideButton = ttk.Button(home, text = 'Pride File', command = pride_extractor)
 prideButton.grid(row = 1, column = 0)
 gpaButton = ttk.Button(home, text = 'GPA Ranker & Counter', command = gpa)
 gpaButton.grid(row = 2, column = 0)
-
-mainloop()
