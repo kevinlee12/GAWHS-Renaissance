@@ -7,7 +7,6 @@
 # Copyright:   (c) leekevin 2013
 # Licence:     GPL v3
 # Notes:       Program is written backward, please start from the bottom to begin reading.
-# Planned Features: Error Log
 #-------------------------------------------------------------------------------
 #Import for all functions needed
 from tkinter import *
@@ -33,18 +32,20 @@ def splitter():
     sheet_reader = csv.reader(new_sheet, dialect="excel")
     new_sheet.seek(1)
     for line in sheet_reader:
-        if teacher == line[3]:
+        if teacher == line[4]:
             pass
         elif line[3] == 'Teacher':
-            continue
-        elif teacher != line[3]:
+            pass
+        elif teacher != line[4]:
             output.write('\n')
-            output.write('Teacher: ' + line[3] +'\n')
-        new_line = line[1] + ':' + line[2] + ' = ' + line[4] + '.:' + line[5] + '\n'
-        teacher= line[3]
+            output.write('Teacher: ' + line[4] +'\n')
+        new_line = line[1] + ':' + line[2] + ' = ' + line[5] + '.:' + line[6] + '\n'
+        teacher= line[4]
         print(new_line)
         output.write(new_line)
     new_sheet.close()
+    os.system(str("start notepad " + outsheet_directory[0]+'/Numbers.txt'))
+    os.system(str("start notepad " + outsheet_directory[0]+'/Output.txt'))
     step1 = ttk.Frame(win)
     global step1
     step1.pack()
@@ -58,6 +59,7 @@ def gpa():
     #CSV File (out_file in Decider) will now be sheet
     try:
         step1.destroy()
+        home.destroy()
     except:
         pass
     total = 0
@@ -67,6 +69,7 @@ def gpa():
     silver = 0
     gold = 0
     platinum = 0
+    errors = 0
     try:
         sheet_filename = filedialog.askopenfilename(filetypes = (("CSV Files", ".csv"),("All files", "*.*")),initialfile = 'PRIDEOutput.csv')
     except IOError:
@@ -75,11 +78,18 @@ def gpa():
         sys.exit()
     sheet = open(sheet_filename, 'r')
     outsheet_directory = os.path.split(sheet_filename)
+    sheet_reader = csv.reader(sheet, dialect="excel")
     global outsheet_directory
     new_sheet = open(outsheet_directory[0]+'/GPAOutput.csv','w')
     writer =csv.writer(new_sheet, dialect='excel')
-    sheet_reader = csv.reader(sheet, dialect="excel")
+    new_sheet_reader=csv.reader(new_sheet,dialect='excel')
     writer.writerow(['Gender','Grade','Name','Birthday','Teacher','GPA','Rank'])
+    numbers_results = open(outsheet_directory[0]+'/Numbers.txt','w')
+    date_time = str(datetime.datetime.now())
+    numbers_results.write('Summary of the Total Counts generated: '+ date_time +'\n')
+    numbers_results.write('\nErrors:')
+    #step1 = ttk.Frame(win)
+    #step1.pack()
     for row in sheet_reader:
         total = total + 1
         if row[5] == 'GPA':
@@ -110,7 +120,11 @@ def gpa():
                 platinum = platinum + 1
             elif row[5]>6:
                 row[6] = 'INVALID GPA'
+                numbers_results.write('\n' + str(row[1:3] + row[4:6]))
+                errors = 1
             print(row)
+            #display = ttk.Label(home, textvariable = row)
+            #display.grid(row = 3, column = 1)
             writer.writerow(row)
         except ValueError:
             pass
@@ -119,7 +133,7 @@ def gpa():
             quit
         print(row)
     try:
-        #sheet.close()
+        sheet.close()
         print('done')
     except ValueError:
         pass
@@ -128,7 +142,6 @@ def gpa():
         home.destroy()
     except:
         pass
-    date_time = str(datetime.datetime.now())
     total = str(total-1)
     none = str(none)
     wildcat = str(wildcat)
@@ -136,16 +149,34 @@ def gpa():
     silver = str(silver)
     gold = str(gold)
     platinum = str(platinum)
-    numbers_results = open(outsheet_directory[0]+'/Numbers.txt','w')
-    numbers_results.write('Summary of the Total Counts generated:'+ date_time +'\n' + 'Totals:'+ total + '\nEncouragement:'+ none +'\nWildcat:'+ wildcat + '\nBronze:'+ bronze + '\nSilver:'+ silver + '\nGold:'+ gold + '\nPlatinum:' + platinum)
-    numbers_results.write('\n\nErrors:')
-    #USE OUTFILE CSV- NOT COMPLETED
-    for row in sheet_reader:
-        if row[6]==:
-            numbers_results.write('\n row[0:]')
-    sheet.close()
+    if errors == 1:
+        numbers_results.write('\n\nIf there are errors listed above, please correct the errors'
+                          '\nin the PRIDE input file and run GPA Ranker and Sorter again.\n\n')
+    elif errors == 0:
+        numbers_results.write('\n\nNO Errors Found!\n\n')
+    numbers_results.write('Renaissance Card Counts\n' + 'Totals: '+ total + '\nEncouragement: '+ none +
+                          '\nWildcat: '+ wildcat + '\nBronze: '+ bronze + '\nSilver: '+ silver + '\nGold:'+
+                          gold + '\nPlatinum: ' + platinum)
     numbers_results.close()
     new_sheet.close()
+    if errors == 1:
+        os.system(str("start notepad " + outsheet_directory[0]+'/Numbers.txt'))
+        home.destroy()
+        step1 = ttk.Frame(win)
+        global step15
+        step1.pack()
+        done1_prompt = ttk.Label(step1, text= 'Error:', font = 'Arial 13')
+        done1_prompt.grid(row = 0, column = 0)
+        done1_prompt2 = ttk.Label(step1, text= 'Errors were found, please correct them.', font = 'Arial 13')
+        done1_prompt2.grid(row = 1, column = 0)
+        done_step1 = ttk.Button(step1, text = 'Done', command = gpa)
+        done_step1.grid(row = 3, column = 0)
+        step1_quit = ttk.Button(step1, text = 'Quit', command = sys.exit)
+        step1_quit.grid(row = 3, column = 1)
+        os.system(str("start excel.exe " + outsheet_directory[0] + '/' + outsheet_directory[1]))
+        sys.exit()
+        os.system('pause')
+    
     os.system(str("start excel.exe " + outsheet_directory[0] + '/GPAOutput.csv'))
     step1 = ttk.Frame(win)
     global step1
