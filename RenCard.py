@@ -206,7 +206,7 @@ def decider():
     writer.writerow(['Gender','Grade','Name','Birthday','Teacher','GPA','Rank'])
     teacher_pat = re.compile(r'(?P<pat>Teache)'r'(?P<teacher_last>[-a-zA-Z\' ]+, [-a-zA-Z\']+)')
     room_pat = re.compile(r'(?P<pat>Room )'r'(?P<room>[A-Z][-a-zA-Z0-9]+)')
-    student_pat = re.compile(r'(?P<gender>[FM] )'r'(?P<grade>\d\d)'r'(?P<name>[-a-zA-Z ]+, [-a-zA-Z ]+)'r'(?P<bday>\d\d/\d\d/\d\d)')
+    student_pat = re.compile(r'(?P<gender>[FM] )'r'(?P<grade>\d\d)'r'(?P<name>[-a-zA-Z ]+, [-a-zA-Z ]+)'r'(?P<bday>\d\d/\d\d/\d+)')
     for line in file.readlines():
         teacher = teacher_pat.findall(line)
         student = student_pat.findall(line)
