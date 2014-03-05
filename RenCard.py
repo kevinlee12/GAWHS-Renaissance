@@ -13,12 +13,32 @@ from tkinter import *
 from tkinter.ttk import *
 from tkinter import ttk
 from tkinter import filedialog
+import tkinter
 import sys
 import re
 import csv
 import os
 import datetime
 #---------End Import------
+def assist():
+    '''Assist module'''
+    home.destroy()
+    assistwin= ttk.Frame(win)
+    assistwin.pack()
+    top = ttk.Label(assistwin, text = 'Help and License Module', font = 'Arial 14')
+    top.grid(row = 0, column = 0)
+    lic = tk.Text(assistwin, text = 'Text')
+    lic.grid(row = 1, column = 0)
+    lic1 = ttk.Label(assistwin, text = 'By using this application, you agree to', font= 'Arial 13')
+    lic1.grid(row = 2, column = 0)
+    lic2 = ttk.Label(assistwin, text = 'the conditions set forth by the', font = 'Arial 13')
+    lic2.grid(row = 3, column = 0)
+    lic3 = ttk.Label(assistwin, text = 'GPL v3 License, which can be found online at', font = 'Arial 13')
+    lic3.grid(row = 4, column = 0)
+    lic4 = ttk.Label(assistwin, text = '')
+    assist1= ttk.Label(assistwin,text = '',font = 'Arial 13')
+    assist1.grid(row = 5, column = 0)
+    
 
 def splitter():
     '''Arrange Students by Pride Class and outputs text files.'''
@@ -123,8 +143,6 @@ def gpa():
                 numbers_results.write('\n' + str(row[1:3] + row[4:6]))
                 errors = 1
             print(row)
-            #display = ttk.Label(home, textvariable = row)
-            #display.grid(row = 3, column = 1)
             writer.writerow(row)
         except ValueError:
             pass
@@ -155,7 +173,7 @@ def gpa():
     elif errors == 0:
         numbers_results.write('\n\nNO Errors Found!\n\n')
     numbers_results.write('Renaissance Card Counts\n' + 'Totals: '+ total + '\nEncouragement: '+ none +
-                          '\nWildcat: '+ wildcat + '\nBronze: '+ bronze + '\nSilver: '+ silver + '\nGold:'+
+                          '\nWildcat: '+ wildcat + '\nBronze: '+ bronze + '\nSilver: '+ silver + '\nGold: '+
                           gold + '\nPlatinum: ' + platinum)
     numbers_results.close()
     new_sheet.close()
@@ -181,7 +199,7 @@ def gpa():
     step1 = ttk.Frame(win)
     global step1
     step1.pack()
-    done1_prompt = ttk.Label(step1, text= 'Sort the spreadsheet according to the following order:', font = 'SegoeUI 13')
+    done1_prompt = ttk.Label(step1, text= 'Sort the spreadsheet according to the following order:', font = 'Arial 13')
     done1_prompt.grid(row = 0, column = 0)
     done1_prompt2 = ttk.Label(step1, text= '1. Teacher', font = 'Arial 13')
     done1_prompt2.grid(row = 1, column = 0)
@@ -242,10 +260,17 @@ def decider():
     done1_prompt.grid(row = 1, column = 0)
     done1_prompt = ttk.Label(step1, text= '2. Name',font = 'Arial 13')
     done1_prompt.grid(row = 2, column = 0)
+    done1_prompt4 = ttk.Label(step1, text = 'After sorting, input each student\'s GPA,', font = 'Arial 13')
+    done1_prompt4.grid(row = 3, column = 0)
+    done1_prompt5 = ttk.Label(step1, text = 'if the student does not have a GPA or is new,', font = 'Arial 13')
+    done1_prompt5.grid(row = 4, column = 0)
+    done1_prompt6 = ttk.Label(step1, text = 'leave it blank.', font = 'Arial 13')
+    done1_prompt6.grid(row = 5, column = 0)
     done_step1 = ttk.Button(step1, text = 'Done', command = gpa)
-    done_step1.grid(row = 3, column = 0)
+    done_step1.grid(row = 6, column = 0)
     step1_quit = ttk.Button(step1, text = 'Quit', command = sys.exit)
-    step1_quit.grid(row = 3, column = 1)
+    step1_quit.grid(row = 7, column = 0)
+    
 def pride_extractor():
     '''Asks user for file and sends user to decider function.'''
     file_n = filedialog.askopenfilename(filetypes = (("Text Files", ".txt"),("All files", "*.*")))
@@ -265,7 +290,7 @@ top.pack()
 home = ttk.Frame(win)
 home.pack()
 style = ttk.Style()
-style.configure("BW.TLabel" ) #Change font size
+style.configure("BW.TLabel")
 welcome = ttk.Label(top,text = 'Renaissance Card Sorter', font = 'Arial 14')
 welcome.grid(row = 0 , column = 0)
 logo_image = PhotoImage(file = 'logowhite.gif')
@@ -275,3 +300,5 @@ prideButton = ttk.Button(home, text = 'Pride File', command = pride_extractor)
 prideButton.grid(row = 1, column = 0)
 gpaButton = ttk.Button(home, text = 'GPA Ranker & Counter', command = gpa)
 gpaButton.grid(row = 2, column = 0)
+assistButton = ttk.Button(home, text = 'Help & License', command = assist)
+assistButton.grid(row = 3, column = 0)
