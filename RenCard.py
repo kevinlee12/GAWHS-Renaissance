@@ -20,25 +20,7 @@ import csv
 import os
 import datetime
 #---------End Import------
-def assist():
-    '''Assist module'''
-    home.destroy()
-    assistwin= ttk.Frame(win)
-    assistwin.pack()
-    top = ttk.Label(assistwin, text = 'Help and License Module', font = 'Arial 14')
-    top.grid(row = 0, column = 0)
-    lic = tk.Text(assistwin, text = 'Text')
-    lic.grid(row = 1, column = 0)
-    lic1 = ttk.Label(assistwin, text = 'By using this application, you agree to', font= 'Arial 13')
-    lic1.grid(row = 2, column = 0)
-    lic2 = ttk.Label(assistwin, text = 'the conditions set forth by the', font = 'Arial 13')
-    lic2.grid(row = 3, column = 0)
-    lic3 = ttk.Label(assistwin, text = 'GPL v3 License, which can be found online at', font = 'Arial 13')
-    lic3.grid(row = 4, column = 0)
-    lic4 = ttk.Label(assistwin, text = '')
-    assist1= ttk.Label(assistwin,text = '',font = 'Arial 13')
-    assist1.grid(row = 5, column = 0)
-    
+
 
 def splitter():
     '''Arrange Students by Pride Class and outputs text files.'''
@@ -280,6 +262,49 @@ def pride_extractor():
     if file_n != '':
         process = ttk.Button(home, text = 'Extract!',command = decider)
         process.grid(row = 1, column = 2)
+
+def start():
+    assistwin.destroy()
+    home = ttk.Frame(win)
+    global home
+    home.pack()
+    prideButton = ttk.Button(home, text = 'Pride File', command = pride_extractor)
+    prideButton.grid(row = 1, column = 0)
+    gpaButton = ttk.Button(home, text = 'GPA Ranker & Counter', command = gpa)
+    gpaButton.grid(row = 2, column = 0)
+    assistButton = ttk.Button(home, text = 'Help & License', command = assist)
+    assistButton.grid(row = 3, column = 0)
+
+
+def assist():
+    '''Assist module'''
+    try:
+        home.destroy()
+    except:
+        pass
+    assistwin= ttk.Frame(win)
+    assistwin.pack()
+    global assistwin
+    top = ttk.Label(assistwin, text = 'Help and License Module', font = 'Arial 14')
+    top.grid(row = 0, column = 0)
+    assist_license_title = ttk.Label(assistwin, text = 'License', font = 'Arial 13')
+    assist_license_title.grid(row = 1, column = 0)
+    lic = ttk.Label(assistwin, text = 'This file is part of Renaissance Card Sorter. Renaissance Card Sorter is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or any later version.', font = 'Arial 8', wraplength = 400, pad = 5)
+    lic1 = ttk.Label(assistwin, text = 'Renaissance Card sorter is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.', font = 'Arial 8', wraplength = 400, pad = 5)
+    lic2 = ttk.Label(assistwin, text = 'See the GNU General Public License for more details. You should have received a copy of the GNU General Public Licensealong with Renaissance Card Sorter.  If not, see <http://www.gnu.org/licenses/>.', font = 'Arial 8', wraplength = 400, pad = 5)
+    lic.grid(row = 2, column = 0)
+    lic1.grid(row = 3, column = 0)
+    lic2.grid(row = 4, column = 0)
+    assist_title= ttk.Label(assistwin,text = '\nAssist',font = 'Arial 13')
+    assist_title.grid(row = 5, column = 0)
+    assist1 = ttk.Label(assistwin, text = 'GPA Guidelines',font = 'Arial 11',wraplength = 400)
+    assist1.grid(row = 6, column = 0)
+    assist2 = ttk.Label(assistwin, text = 'GPA Range: [0,6] and none\n\nNew Students: Leave corresponding cell blank\nStudents with GPA: Enter corresponding GPA in cell\nNon-Frosh w/o GPA: Compile a list and ask the advisor to look up those students\' GPA, if the student is new, leave the cell blank, otherwise, input 0.', font = 'Arial 10', wraplength = 400, pad = 2)
+    assist2.grid(row= 7, column =0)
+    assist3 = ttk.Label(assistwin, text = '\nGPA Levels\nEncouragement: Incomplete and GPA below 2.0\nBronze: 2.0 to 2.49\nSilver: 2.5 to 2.99\nGold: 3.0 to 3.49\nPlatinum: 3.5 to 6', font = 'Arial 10', wraplength = 400, pad = 5)              
+    assist3.grid(row = 8, column = 0)
+    back = ttk.Button(assistwin, text = 'Return to Main Menu', command = start)
+    back.grid(row = 9,column =0)
 
 #The following is for the main window, program begins here.
 win= Tk()
