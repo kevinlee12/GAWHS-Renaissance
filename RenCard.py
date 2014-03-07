@@ -303,8 +303,12 @@ def assist():
     assist2.grid(row= 7, column =0)
     assist3 = ttk.Label(assistwin, text = '\nGPA Levels\nEncouragement: Incomplete and GPA below 2.0\nBronze: 2.0 to 2.49\nSilver: 2.5 to 2.99\nGold: 3.0 to 3.49\nPlatinum: 3.5 to 6', font = 'Arial 10', wraplength = 400, pad = 5)              
     assist3.grid(row = 8, column = 0)
+    assist4 = ttk.Label(assistwin, text= 'Errors', font = 'Arial 11')
+    assist4.grid(row= 9, column = 0)
+    assist5 = ttk.Label(assistwin, text = 'For GPAs that are over 6, the program will trigger an error response. After the program is executed, it will launch a text document (with the list of the students with incorrect GPA and preliminary count) and an excel file that was used to enter the GPA. After the two file launch, locate the people who had issues on the spreadsheet file and correct the errors, close the program and click \"Done\". The program will re-run and resume as normal. ', font = 'Arial 10', wraplength = 400, pad = 5)
+    assist5.grid(row = 10, column = 0)
     back = ttk.Button(assistwin, text = 'Return to Main Menu', command = start)
-    back.grid(row = 9,column =0)
+    back.grid(row = 11,column =0)
 
 #The following is for the main window, program begins here.
 win= Tk()
