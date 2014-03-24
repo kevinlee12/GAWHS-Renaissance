@@ -9,19 +9,19 @@
 # Notes:       Program is written backward, please start from the bottom to begin reading.
 # Prerequites: Windows, MS Excel, Notepad
 #-------------------------------------------------------------------------------
-
 #Import for all functions needed
 from tkinter import *
 from tkinter.ttk import *
 from tkinter import ttk
 from tkinter import filedialog
-import tkinter
 import sys
 import re
 import csv
 import os
 import datetime
 #---------End Import------
+
+print('Hi')
 
 def splitter():
     '''Arrange Students by Pride Class and outputs text files.'''
@@ -175,7 +175,7 @@ def gpa():
         step1_quit = ttk.Button(step1, text = 'Quit', command = sys.exit)
         step1_quit.grid(row = 3, column = 1)
         os.system(str("start excel.exe " + outsheet_directory[0] + '/' + outsheet_directory[1]))
-        sys.exit()
+        #sys.exit()
         os.system('pause')
     
     os.system(str("start excel.exe " + outsheet_directory[0] + '/GPAOutput.csv'))
@@ -264,18 +264,6 @@ def pride_extractor():
         process = ttk.Button(home, text = 'Extract!',command = decider)
         process.grid(row = 1, column = 2)
 
-def start():
-    assistwin.destroy()
-    home = ttk.Frame(win)
-    global home
-    home.pack()
-    prideButton = ttk.Button(home, text = 'Pride File', command = pride_extractor)
-    prideButton.grid(row = 1, column = 0)
-    gpaButton = ttk.Button(home, text = 'GPA Ranker & Counter', command = gpa)
-    gpaButton.grid(row = 2, column = 0)
-    assistButton = ttk.Button(home, text = 'Help & License', command = assist)
-    assistButton.grid(row = 3, column = 0)
-
 
 def assist():
     '''Assist module'''
@@ -317,6 +305,22 @@ def assist():
     back = ttk.Button(assistwin, text = 'Return to Main Menu', command = start)
     back.grid(row = 14,column =0)
 
+def start():
+    try: 
+        assistwin.destroy()
+    except:
+        pass
+    home = ttk.Frame(win)
+    global home
+    home.pack()
+    prideButton = ttk.Button(home, text = 'Pride File', command = pride_extractor)
+    prideButton.grid(row = 1, column = 0)
+    gpaButton = ttk.Button(home, text = 'GPA Ranker & Counter', command = gpa)
+    gpaButton.grid(row = 2, column = 0)
+    assistButton = ttk.Button(home, text = 'Help & License', command = assist)
+    assistButton.grid(row = 3, column = 0)
+
+
 #The following is for the main window, program begins here.
 win= Tk()
 win.title('Renaissance Card Sorter')
@@ -329,12 +333,20 @@ style = ttk.Style()
 style.configure("BW.TLabel")
 welcome = ttk.Label(top,text = 'Renaissance Card Sorter', font = 'Arial 14')
 welcome.grid(row = 0 , column = 0)
+##try:
+##    logo_image = PhotoImage(file = 'logowhite.gif')
+##    logo = ttk.Label(top ,image = logo_image)
+##    logo.grid(row=0, column =2)
+##except:
+##    pass
 logo_image = PhotoImage(file = 'logowhite.gif')
 logo = ttk.Label(top ,image = logo_image)
-logo.grid(row=0, column =2)
+logo.grid(row=0, column =1)
 prideButton = ttk.Button(home, text = 'Pride File', command = pride_extractor)
 prideButton.grid(row = 1, column = 0)
 gpaButton = ttk.Button(home, text = 'GPA Ranker & Counter', command = gpa)
 gpaButton.grid(row = 2, column = 0)
 assistButton = ttk.Button(home, text = 'Help & License', command = assist)
 assistButton.grid(row = 3, column = 0)
+
+mainloop()
