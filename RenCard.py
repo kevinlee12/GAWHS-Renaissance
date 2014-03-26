@@ -29,7 +29,7 @@ def splitter():
     try:
         new_sheet = open(outsheet_directory[0]+'/GPAOutput.csv','r')
     except:
-        sys.exit()
+        pass
     output = open(outsheet_directory[0]+'/Output.txt','w')
     teacher = ''
     sheet_reader = csv.reader(new_sheet, dialect="excel")
@@ -175,7 +175,7 @@ def gpa():
         step1_quit = ttk.Button(step1, text = 'Quit', command = sys.exit)
         step1_quit.grid(row = 3, column = 1)
         os.system(str("start excel.exe " + outsheet_directory[0] + '/' + outsheet_directory[1]))
-        #sys.exit()
+        sys.exit()
         os.system('pause')
     
     os.system(str("start excel.exe " + outsheet_directory[0] + '/GPAOutput.csv'))
