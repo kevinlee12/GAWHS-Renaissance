@@ -3,5 +3,5 @@ GAWHS-Renaissance
 
 RenCard Program
 
-No Longer Maintained
+Refer to https://bitbucket.org/kevinlee963/renaissance/overview.
 -----
